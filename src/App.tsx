@@ -53,6 +53,12 @@ import {
 } from "./types";
 import { PRESET_PROJECT_DEMO, PRESET_AUTO_SERVICE, PRESETS } from "./data/presets";
 
+// Helper to dynamically get API base URL to support deploying under subpaths like /valuechain/
+const getApiUrl = (endpoint: string) => {
+  const isSubpath = window.location.pathname.startsWith("/valuechain");
+  return `${isSubpath ? "/valuechain" : ""}${endpoint}`;
+};
+
 export default function App() {
   // Projects List
   const [projects, setProjects] = useState<ResearchProject[]>(() => {
@@ -244,7 +250,7 @@ export default function App() {
     }
     setIsAIInitializing(true);
     try {
-      const response = await fetch("/api/research/generate-starting-elements", {
+      const response = await fetch(getApiUrl("/api/research/generate-starting-elements"), {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -326,7 +332,7 @@ export default function App() {
     }
     setIsAIGeneratingQuestions(true);
     try {
-      const response = await fetch("/api/research/generate-questions", {
+      const response = await fetch(getApiUrl("/api/research/generate-questions"), {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -380,7 +386,7 @@ export default function App() {
     }
     setIsAIGroundingSearching(true);
     try {
-      const response = await fetch("/api/research/grounding-search", {
+      const response = await fetch(getApiUrl("/api/research/grounding-search"), {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -445,7 +451,7 @@ export default function App() {
       // Gather all grounding chunks in this project so far
       const allChunks = activeProject.groundingSearches.flatMap(gs => gs.records);
       
-      const response = await fetch("/api/research/synthesize", {
+      const response = await fetch(getApiUrl("/api/research/synthesize"), {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -517,7 +523,7 @@ export default function App() {
     setIsAIGeneratingReport(true);
     try {
       const allChunks = activeProject.groundingSearches.flatMap(gs => gs.records);
-      const response = await fetch("/api/research/generate-report", {
+      const response = await fetch(getApiUrl("/api/research/generate-report"), {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
