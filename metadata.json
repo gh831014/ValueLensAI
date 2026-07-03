@@ -1,0 +1,6 @@
+{
+  "name": "市场调研与价值链分析工具",
+  "description": "智能分析市场痛点、识别业务流程与角色岗位价值、检索收集网上信息，一键生成结构化调研模板、核心产品功能定义与分析报告并支持导出。",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
